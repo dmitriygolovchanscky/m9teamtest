@@ -17,10 +17,10 @@ containerArrow.addEventListener("click", () => {
 });
 
 document.body.addEventListener("click", (e) => {
-   closeActiveDropdown();
+   closeActiveDropdown(e);
 });
 
-function closeActiveDropdown() {
+function closeActiveDropdown(e) {
    const activeDropdown = document.querySelector(".dropdown.active");
    if (activeDropdown && !e.target.closest(".dropdown.active")) {
       activeDropdown.classList.remove("active");
@@ -58,7 +58,7 @@ containerAddButton.addEventListener("click", () => {
 });
 
 tableBody.addEventListener("click", (e) => {
-   closeActiveDropdown();
+   closeActiveDropdown(e);
    if (e.target.closest("input")) {
       e.target.closest("input").parentElement.classList.add("active");
    } else if (e.target.closest("ul button")) {
