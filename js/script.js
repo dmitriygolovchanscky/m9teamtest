@@ -58,9 +58,10 @@ containerAddButton.addEventListener("click", () => {
 });
 
 tableBody.addEventListener("click", (e) => {
-   closeActiveDropdown(e);
    if (e.target.closest("input")) {
-      e.target.closest("input").parentElement.classList.add("active");
+      closeActiveDropdown(e);
+		const dropdown = e.target.closest("input").parentElement;
+		dropdown.classList.contains('active') ?  dropdown.classList.remove("active") :  dropdown.classList.add("active");
    } else if (e.target.closest("ul button")) {
       const button = e.target.closest("ul button");
       const dropdown = button.closest(".dropdown");
