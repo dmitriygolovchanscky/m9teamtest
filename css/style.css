@@ -294,10 +294,7 @@ td:last-child img {
   padding-right: 35px;
   font-size: 16px;
   font-weight: 500;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
+  pointer-events: none;
 }
 .dropdown img {
   pointer-events: none;
@@ -345,6 +342,16 @@ td:last-child img {
 }
 .dropdown button:hover {
   background: var(--gray);
+}
+.dropdown-rect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .container-button {

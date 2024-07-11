@@ -45,8 +45,9 @@ containerAddButton.addEventListener("click", () => {
       newComponent.innerHTML += `
 			<td>
 				<div class="dropdown">
-					<input type="text" disabled>
+					<input type="text" readonly>
 					<img src="img/arrow.svg" alt="Стрелка вниз">
+					<div class="dropdown-rect"></div>
 					<ul>
 						<li><button>SFRN-4204</button></li>
 						<li><button>SFRN-4205</button></li>
@@ -69,9 +70,9 @@ containerAddButton.addEventListener("click", () => {
 });
 
 tableBody.addEventListener("click", (e) => {
-   if (e.target.closest("input")) {
+   if (e.target.closest(".dropdown-rect")) {
       closeActiveDropdown(e);
-      const dropdown = e.target.closest("input").parentElement;
+      const dropdown = e.target.closest(".dropdown-rect").parentElement;
       const dropdownInput = dropdown.querySelector("input");
       const dropdownlist = dropdown.querySelector("ul");
 		let leftPosition = dropdownInput.getBoundingClientRect().left;
