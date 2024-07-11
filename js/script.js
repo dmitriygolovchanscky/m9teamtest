@@ -45,7 +45,7 @@ containerAddButton.addEventListener("click", () => {
       newComponent.innerHTML += `
 			<td>
 				<div class="dropdown">
-					<input type="text" readonly>
+					<input type="text" disabled>
 					<img src="img/arrow.svg" alt="Стрелка вниз">
 					<ul>
 						<li><button>SFRN-4204</button></li>
