@@ -246,10 +246,12 @@ tr {
   width: 100%;
 }
 
-th, td {
+th,
+td {
   width: calc((100% - 27px) / 4);
 }
-th:last-child, td:last-child {
+th:last-child,
+td:last-child {
   width: 27px;
   display: flex;
   justify-content: center;
@@ -286,6 +288,7 @@ td:last-child img {
 .dropdown input {
   width: 100%;
   background: var(--gray);
+  color: #333;
   border-radius: 5px;
   padding: 10px;
   padding-right: 35px;
@@ -314,6 +317,10 @@ td:last-child img {
   max-height: 120px;
   overflow-x: hidden;
   display: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 .dropdown ul::-webkit-scrollbar {
   width: 10px;
