@@ -20,10 +20,22 @@ document.body.addEventListener("click", (e) => {
    closeActiveDropdown(e);
 });
 
-function closeActiveDropdown(e) {
+window.addEventListener("resize", (e) => {
+   closeActiveDropdown(e, true);
+   if (container.classList.contains("active")) {
+      container.classList.remove("active");
+      setContainerHeight();
+   }
+});
+
+function closeActiveDropdown(e, onResize = false) {
    const activeDropdown = document.querySelector(".dropdown.active");
-   if (activeDropdown && !e.target.closest(".dropdown.active")) {
-      activeDropdown.classList.remove("active");
+   if (onResize) {
+      if (activeDropdown) activeDropdown.classList.remove("active");
+   } else {
+      if (activeDropdown && !e.target.closest(".dropdown.active")) {
+         activeDropdown.classList.remove("active");
+      }
    }
 }
 
@@ -43,16 +55,15 @@ containerAddButton.addEventListener("click", () => {
 						<li><button>SFRN-4208</button></li>
 					</ul>
 				</div>
-			</td>
-		`;
+			</td>`;
    }
+
    newComponent.innerHTML += `
 		<td>
 			<button class="button-delete">
 				<img src="img/trash-bin.svg" alt="">
 			</button>
-		</td>
-	`;
+		</td>`;
    tableBody.append(newComponent);
    setContainerHeight();
 });
@@ -60,8 +71,28 @@ containerAddButton.addEventListener("click", () => {
 tableBody.addEventListener("click", (e) => {
    if (e.target.closest("input")) {
       closeActiveDropdown(e);
-		const dropdown = e.target.closest("input").parentElement;
-		dropdown.classList.contains('active') ?  dropdown.classList.remove("active") :  dropdown.classList.add("active");
+      const dropdown = e.target.closest("input").parentElement;
+      const dropdownInput = dropdown.querySelector("input");
+      const dropdownlist = dropdown.querySelector("ul");
+		let leftPosition = dropdownInput.getBoundingClientRect().left;
+		if (dropdownInput.offsetWidth + 10 < document.documentElement.clientWidth) {
+			if (leftPosition + dropdownInput.offsetWidth + 10 > document.documentElement.clientWidth) {
+				while (leftPosition + dropdownInput.offsetWidth + 10 > document.documentElement.clientWidth) leftPosition -=1
+			} else if (leftPosition < 11) {
+				while (leftPosition < 11) leftPosition +=1
+			}
+		}
+      dropdownlist.setAttribute(
+         "style",
+         `width: ${dropdownInput.offsetWidth}px; top: ${
+            dropdownInput.getBoundingClientRect().top +
+            dropdownInput.offsetHeight +
+            5
+         }px; left: ${leftPosition}px`
+      );
+      dropdown.classList.contains("active")
+         ? dropdown.classList.remove("active")
+         : dropdown.classList.add("active");
    } else if (e.target.closest("ul button")) {
       const button = e.target.closest("ul button");
       const dropdown = button.closest(".dropdown");
