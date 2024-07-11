@@ -3,6 +3,7 @@ const container = document.querySelector(".container");
 const containerArrow = container.querySelector(".container-arrow svg");
 const containerAddButton = container.querySelector(".container-button");
 const tableBody = container.querySelector("tbody");
+const tableContainer = container.querySelector(".container-table");
 
 let transitionTimeout;
 
@@ -17,25 +18,31 @@ containerArrow.addEventListener("click", () => {
 });
 
 document.body.addEventListener("click", (e) => {
+   closeActiveDropdown(e, true);
+});
+window.addEventListener("scroll", (e) => {
+   closeActiveDropdown(e);
+});
+tableContainer.addEventListener("scroll", (e) => {
    closeActiveDropdown(e);
 });
 
 window.addEventListener("resize", (e) => {
-   closeActiveDropdown(e, true);
+   closeActiveDropdown(e);
    if (container.classList.contains("active")) {
       container.classList.remove("active");
       setContainerHeight();
    }
 });
 
-function closeActiveDropdown(e, onResize = false) {
+function closeActiveDropdown(e, onClick = false) {
    const activeDropdown = document.querySelector(".dropdown.active");
-   if (onResize) {
-      if (activeDropdown) activeDropdown.classList.remove("active");
-   } else {
+   if (onClick) {
       if (activeDropdown && !e.target.closest(".dropdown.active")) {
          activeDropdown.classList.remove("active");
       }
+   } else {
+      if (activeDropdown) activeDropdown.classList.remove("active");
    }
 }
 
@@ -71,18 +78,28 @@ containerAddButton.addEventListener("click", () => {
 
 tableBody.addEventListener("click", (e) => {
    if (e.target.closest(".dropdown-rect")) {
-      closeActiveDropdown(e);
+      closeActiveDropdown(e, true);
       const dropdown = e.target.closest(".dropdown-rect").parentElement;
       const dropdownInput = dropdown.querySelector("input");
       const dropdownlist = dropdown.querySelector("ul");
-		let leftPosition = dropdownInput.getBoundingClientRect().left;
-		if (dropdownInput.offsetWidth + 10 < document.documentElement.clientWidth) {
-			if (leftPosition + dropdownInput.offsetWidth + 10 > document.documentElement.clientWidth) {
-				while (leftPosition + dropdownInput.offsetWidth + 10 > document.documentElement.clientWidth) leftPosition -=1
-			} else if (leftPosition < 11) {
-				while (leftPosition < 11) leftPosition +=1
-			}
-		}
+      let leftPosition = dropdownInput.getBoundingClientRect().left;
+      if (
+         dropdownInput.offsetWidth + 10 <
+         document.documentElement.clientWidth
+      ) {
+         if (
+            leftPosition + dropdownInput.offsetWidth + 10 >
+            document.documentElement.clientWidth
+         ) {
+            while (
+               leftPosition + dropdownInput.offsetWidth + 10 >
+               document.documentElement.clientWidth
+            )
+               leftPosition -= 1;
+         } else if (leftPosition < 11) {
+            while (leftPosition < 11) leftPosition += 1;
+         }
+      }
       dropdownlist.setAttribute(
          "style",
          `width: ${dropdownInput.offsetWidth}px; top: ${
